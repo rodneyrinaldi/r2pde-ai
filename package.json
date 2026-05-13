@@ -39,7 +39,12 @@
     "files": ["dist", "README.md", "LICENSE", "CHANGELOG.md"],
     "engines": { "node": ">=20.0.0" },
     "keywords": ["cli", "ai", "copilot", "engineering", "pde", "pilot-driven", "scaffold", "typescript"],
-    "repository": { "type": "git", "url": "" },
-    "bugs": { "url": "" },
-    "homepage": ""
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/rodneyrinaldi/r2pde-ai.git"
+    },
+    "bugs": {
+        "url": "https://github.com/rodneyrinaldi/r2pde-ai/issues"
+    },
+    "homepage": "https://r2pde-ai.rrs.net.br"
 }
