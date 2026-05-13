@@ -36,12 +36,28 @@
         "typescript": "^6.0.3",
         "vitest": "^4.1.6"
     },
-    "files": ["dist", "README.md", "LICENSE", "CHANGELOG.md"],
-    "engines": { "node": ">=20.0.0" },
-    "keywords": ["cli", "ai", "copilot", "engineering", "pde", "pilot-driven", "scaffold", "typescript"],
+    "files": [
+        "dist",
+        "README.md",
+        "LICENSE",
+        "CHANGELOG.md"
+    ],
+    "engines": {
+        "node": ">=20.0.0"
+    },
+    "keywords": [
+        "cli",
+        "ai",
+        "copilot",
+        "engineering",
+        "pde",
+        "pilot-driven",
+        "scaffold",
+        "typescript"
+    ],
     "repository": {
         "type": "git",
-        "url": "https://github.com/rodneyrinaldi/r2pde-ai.git"
+        "url": "git+https://github.com/rodneyrinaldi/r2pde-ai.git"
     },
     "bugs": {
         "url": "https://github.com/rodneyrinaldi/r2pde-ai/issues"
