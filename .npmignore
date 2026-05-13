@@ -1,0 +1,9 @@
+src/
+test*/
+*.test.ts
+*.test.js
+vitest.config.ts
+tsconfig.json
+.r2pde-ai/
+.git/
+.gitignore
