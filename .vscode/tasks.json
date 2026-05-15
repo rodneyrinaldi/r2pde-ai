@@ -1,0 +1,11 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "clean onboarding test temp",
+			"type": "shell",
+			"command": "rimraf onboard-quickstart-folder-test",
+			"problemMatcher": []
+		}
+	]
+}

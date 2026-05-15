@@ -1,4 +1,4 @@
-﻿import { describe, it, expect, afterEach } from 'vitest';
+import { describe, it, expect, afterEach } from 'vitest';
 import fs from 'fs-extra';
 import os from 'os';
 import path from 'path';
@@ -14,20 +14,20 @@ afterEach(() => {
 });
 
 describe('scoreProject', () => {
-  it('Empty project returns 3 errors (no manifestos, contracts, requirements)', () => {
+  it('Empty project returns 3 errors (no manifests, contracts, requirements)', () => {
     fs.ensureDirSync(tempDir);
     const result = scoreProject(tempDir);
     expect(result.failed).toBeGreaterThanOrEqual(3);
     const issues = result.warnings.map(w => w.issue);
-    expect(issues).toContain('No manifestos defined');
+    expect(issues).toContain('No manifests defined');
     expect(issues).toContain('No contracts defined');
     expect(issues).toContain('No requirements defined');
   });
 
   it('File with metadata header passes that check', () => {
     const paths = getPaths(tempDir);
-    fs.ensureDirSync(paths.manifestos);
-    fs.writeFileSync(path.join(paths.manifestos, 'test-file.md'), '---\nname: Test\ndescription: desc\n---\nContent');
+    fs.ensureDirSync(paths.manifests);
+    fs.writeFileSync(path.join(paths.manifests, 'test-file.md'), '---\nname: Test\ndescription: desc\n---\nContent');
     const result = scoreProject(tempDir);
     const fileWarnings = result.warnings.filter(w => w.file.replace(/\\/g, '/').includes('test-file.md'));
     expect(fileWarnings.some(w => w.issue === 'Missing metadata header')).toBe(false);
@@ -35,8 +35,8 @@ describe('scoreProject', () => {
 
   it('File without metadata header generates warning', () => {
     const paths = getPaths(tempDir);
-    fs.ensureDirSync(paths.manifestos);
-    fs.writeFileSync(path.join(paths.manifestos, 'test-file.md'), 'No header');
+    fs.ensureDirSync(paths.manifests);
+    fs.writeFileSync(path.join(paths.manifests, 'test-file.md'), 'No header');
     const result = scoreProject(tempDir);
     const fileWarnings = result.warnings.filter(w => w.file.replace(/\\/g, '/').includes('test-file.md'));
     expect(fileWarnings.some(w => w.issue === 'Missing metadata header')).toBe(true);
@@ -44,8 +44,8 @@ describe('scoreProject', () => {
 
   it('issuePercentage 0% -> green level', () => {
     const paths = getPaths(tempDir);
-    fs.ensureDirSync(paths.manifestos);
-    fs.writeFileSync(path.join(paths.manifestos, 'm-file.md'), '---\nname: M\ndescription: d\n---\ncontent');
+    fs.ensureDirSync(paths.manifests);
+    fs.writeFileSync(path.join(paths.manifests, 'm-file.md'), '---\nname: M\ndescription: d\n---\ncontent');
     fs.ensureDirSync(paths.contracts);
     fs.writeFileSync(path.join(paths.contracts, 'c-file.md'), '---\nname: C\ndescription: d\n---\ncontent');
     fs.ensureDirSync(paths.requirements);
@@ -64,8 +64,8 @@ describe('scoreProject', () => {
   it('issuePercentage 50% -> yellow level', () => {
     const paths = getPaths(tempDir);
     // 1 valid file
-    fs.ensureDirSync(paths.manifestos);
-    fs.writeFileSync(path.join(paths.manifestos, 'm-file.md'), '---\nname: M\ndescription: d\n---\ncontent');
+    fs.ensureDirSync(paths.manifests);
+    fs.writeFileSync(path.join(paths.manifests, 'm-file.md'), '---\nname: M\ndescription: d\n---\ncontent');
     // Missing contracts and requirements (2 failures)
     // 5 checks per file. 1 file = 5 checks. All pass.
     // 3 folder checks. 1 passes, 2 fail.
@@ -95,11 +95,11 @@ describe('scoreProject', () => {
     expect(result.level).toBe('red');
   });
 
-  it('fromPath filters correctly (contracts -> skips manifestos)', () => {
+  it('fromPath filters correctly (contracts -> skips manifests)', () => {
     const paths = getPaths(tempDir);
     fs.ensureDirSync(paths.contracts);
     fs.writeFileSync(path.join(paths.contracts, 'c1-file.md'), '---\nname: C1\ndescription: d\n---\ncontent');
     const result = scoreProject(tempDir, 'contracts');
-    expect(result.warnings.some(w => w.file.replace(/\\/g, '/').includes('manifestos'))).toBe(false);
+    expect(result.warnings.some(w => w.file.replace(/\\/g, '/').includes('manifests'))).toBe(false);
   });
 });

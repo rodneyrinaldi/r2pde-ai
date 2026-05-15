@@ -46,7 +46,7 @@ export async function doctorCommand(): Promise<void> {
 
   // Check 4 — All required folders exist
   const requiredFolders = [
-    paths.manifestos,
+    paths.manifests,
     paths.contracts,
     paths.requirements,
     paths.waves,
@@ -68,7 +68,7 @@ export async function doctorCommand(): Promise<void> {
 
   // Check 5 — Templates present
   const templateFiles = [
-    'manifesto.template.md',
+    'manifest.template.md',
     'contract.template.md',
     'requirement.template.md',
   ];

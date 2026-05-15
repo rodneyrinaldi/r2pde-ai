@@ -1,0 +1,18 @@
+{
+  "version": "0.1.0",
+  "language": "en",
+  "artifactsLanguage": "en",
+  "git": { "autoCommit": false, "commitMessagePrefix": "pde:" },
+  "score": { "green": { "max": 30 }, "yellow": { "max": 70 }, "red": { "max": 100 } },
+  "ai": { "apiUrl": "", "apiKey": "", "model": "" },
+  "project": {
+    "type": "dashboard",
+    "architecture": "monolith",
+    "maturity": "production",
+    "hasAuth": true,
+    "hasPayment": false,
+    "hasIntegrations": true,
+    "audience": "b2b",
+    "stack": "Node.js / TypeScript"
+  }
+}

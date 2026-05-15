@@ -12,7 +12,7 @@ describe('getPaths', () => {
     expect(paths).toHaveProperty('index');
     expect(paths).toHaveProperty('guide');
     expect(paths).toHaveProperty('logs');
-    expect(paths).toHaveProperty('manifestos');
+    expect(paths).toHaveProperty('manifests');
     expect(paths).toHaveProperty('contracts');
     expect(paths).toHaveProperty('requirements');
     expect(paths).toHaveProperty('waves');

@@ -15,7 +15,7 @@ export const resetCommand = new Command('reset')
       return;
     }
     logWarn('This will delete all files in .r2pde-ai/prompts/. This action cannot be undone.');
-    logInfo('This will permanently delete all generated prompts. Artifacts (manifestos, contracts, requirements) are NOT affected.');
+    logInfo('This will permanently delete all generated prompts. Artifacts (manifests, contracts, requirements) are NOT affected.');
     const doReset = await confirm({ message: 'Reset prompts folder?', default: false });
     if (!doReset) {
       logInfo('Operation cancelled.');

@@ -1,3 +1,7 @@
+// ...existing code...
+// ...existing code...
+import { scaffoldCreateCommand } from './commands/scaffold-create.js';
+
 import { resetCommand } from './commands/reset.js';
 import { logsCommand } from './commands/logs.js';
 import { requirementCreateCommand } from './commands/requirement-create.js';
@@ -13,39 +17,37 @@ import { Command } from 'commander';
 import { initCommand } from './commands/init.js';
 import { doctorCommand } from './commands/doctor.js';
 
-import { manifestoCreateCommand } from './commands/manifesto-create.js';
-import { manifestoDeleteCommand } from './commands/manifesto-delete.js';
+import { manifestCreateCommand } from './commands/manifest-create.js';
+import { manifestDeleteCommand } from './commands/manifest-delete.js';
 import { contractCreateCommand } from './commands/contract-create.js';
 import { contractDeleteCommand } from './commands/contract-delete.js';
 
 const program = new Command();
-program.addHelpText('after', `
-Examples:
-  $ r2pde-ai init
-  $ r2pde-ai doctor
-  $ r2pde-ai manifesto:create
-  $ r2pde-ai contract:create
-  $ r2pde-ai requirement:create
-  $ r2pde-ai score
-  $ r2pde-ai score --from contracts
-  $ r2pde-ai wave:prompt
-  $ r2pde-ai config:set git.autoCommit true
-  $ r2pde-ai config:lang
-  $ r2pde-ai logs
-  $ r2pde-ai logs --clear
-  $ r2pde-ai reset
+program.addHelpText('after', 'Examples:\n  $ r2pde-ai init\n  $ r2pde-ai doctor\n  $ r2pde-ai manifest:create\n  $ r2pde-ai contract:create\n  $ r2pde-ai requirement:create\n  $ r2pde-ai score\n  $ r2pde-ai score --from contracts\n  $ r2pde-ai wave:prompt\n  $ r2pde-ai config:set git.autoCommit true\n  $ r2pde-ai config:lang\n  $ r2pde-ai logs\n  $ r2pde-ai logs --clear\n  $ r2pde-ai reset\n\nDocumentation:\n  After init, read .r2pde-ai/GUIDE.md for full artifact reference.\n  Always paste .r2pde-ai/pde.index.md into your AI copilot before any prompt.');
 
-Documentation:
-  After init, read .r2pde-ai/GUIDE.md for full artifact reference.
-  Always paste .r2pde-ai/pde.index.md into your AI copilot before any prompt.
-`);
-
+program.addCommand(scaffoldCreateCommand);
 program.addCommand(resetCommand);
 program.addCommand(logsCommand);
+
+
 program
   .command('requirement:create')
   .description('Create a new requirement')
-  .action(() => {
+  .option('--name <name>', 'Requirement name')
+  .option('--type <type>', 'Requirement type (functional, non-functional, business-rule)')
+  .option('--priority <priority>', 'Priority (high, medium, low)')
+  .option('--description <description>', 'Requirement description')
+  .option('--changeType <changeType>', 'Change type (feat, fix, improve)')
+  .option('--acceptance <acceptance>', 'Acceptance criteria (semicolon or comma separated)')
+  .option('--force', 'Overwrite requirement if it already exists')
+  .action((opts) => {
+    if (opts.name) process.argv.push('--name', opts.name);
+    if (opts.type) process.argv.push('--type', opts.type);
+    if (opts.priority) process.argv.push('--priority', opts.priority);
+    if (opts.description) process.argv.push('--description', opts.description);
+    if (opts.changeType) process.argv.push('--changeType', opts.changeType);
+    if (opts.acceptance) process.argv.push('--acceptance', opts.acceptance);
+    if (opts.force) process.argv.push('--force');
     void requirementCreateCommand();
   });
 
@@ -56,10 +58,23 @@ program
     void requirementDeleteCommand();
   });
 
+
 program
   .command('contract:create')
   .description('Create a new contract')
-  .action(() => {
+  .option('--name <name>', 'Contract name')
+  .option('--type <type>', 'Contract type (architecture, tdd, ddd, security, permissions, routing, tests, commits, other)')
+  .option('--enforcement <enforcement>', 'Enforcement level (mandatory, recommended)')
+  .option('--description <description>', 'Contract description')
+  .option('--changeType <changeType>', 'Change type (feat, fix, improve)')
+  .option('--force', 'Overwrite contract if it already exists')
+  .action((opts) => {
+    if (opts.name) process.argv.push('--name', opts.name);
+    if (opts.type) process.argv.push('--type', opts.type);
+    if (opts.enforcement) process.argv.push('--enforcement', opts.enforcement);
+    if (opts.description) process.argv.push('--description', opts.description);
+    if (opts.changeType) process.argv.push('--changeType', opts.changeType);
+    if (opts.force) process.argv.push('--force');
     void contractCreateCommand();
   });
 
@@ -69,18 +84,29 @@ program
   .action(() => {
     void contractDeleteCommand();
   });
+
 program
-  .command('manifesto:create')
-  .description('Create a new manifesto')
-  .action(() => {
-    void manifestoCreateCommand();
+  .command('manifest:create')
+  .description('Create a new manifest')
+  .option('--name <name>', 'Manifest name')
+  .option('--scope <scope>', 'Manifest scope (ui, ux, code-philosophy, development-culture, other)')
+  .option('--description <description>', 'Manifest description')
+  .option('--type <type>', 'Change type (feat, fix, improve)')
+  .option('--force', 'Overwrite manifest if it already exists')
+  .action((opts) => {
+    process.argv.push('--name', opts.name || '');
+    process.argv.push('--scope', opts.scope || '');
+    process.argv.push('--description', opts.description || '');
+    process.argv.push('--type', opts.type || '');
+    if (opts.force) process.argv.push('--force');
+    void manifestCreateCommand();
   });
 
 program
-  .command('manifesto:delete')
-  .description('Delete an existing manifesto')
+  .command('manifest:delete')
+  .description('Delete an existing manifest')
   .action(() => {
-    void manifestoDeleteCommand();
+    void manifestDeleteCommand();
   });
 
 program.addCommand(scoreCommand);

@@ -65,14 +65,14 @@ export const wavePromptCommand = new Command('wave:prompt')
       return files.map(f => fs.readFileSync(path.join(dir, f), 'utf8')).join('\n---\n');
     }
     const indexContent = readOrPlaceholder(path.join(paths.root, 'pde.index.md'));
-    const manifestosContent = readAllOrPlaceholder(paths.manifestos);
+    const manifestsContent = readAllOrPlaceholder(paths.manifests);
     const contractsContent = readAllOrPlaceholder(paths.contracts);
     const requirementsContent = readAllOrPlaceholder(paths.requirements);
     // Step 5 — Generate prompt
     const now = new Date();
     const tsFmt = `${now.getFullYear()}${String(now.getMonth()+1).padStart(2,'0')}${String(now.getDate()).padStart(2,'0')}-${String(now.getHours()).padStart(2,'0')}${String(now.getMinutes()).padStart(2,'0')}${String(now.getSeconds()).padStart(2,'0')}`;
     const filename = `${wave}-${tsFmt}.md`;
-    const prompt = `# r2pde-ai — Wave Prompt: ${wave}\nGenerated: ${now.toISOString()}\nScore: ${score.level === 'green' ? '🟢' : score.level === 'yellow' ? '🟡' : '🔴'} ${score.percentage}%\n\n---\n\n## Project Context\n${indexContent}\n\n---\n\n## Manifestos\n${manifestosContent}\n\n---\n\n## Contracts\n${contractsContent}\n\n---\n\n## Requirements\n${requirementsContent}\n\n---\n\n## Wave Objective\nYou are an AI coding assistant working on the ${wave} wave of this project.\nYour task is to implement everything required for this wave following ALL manifestos, contracts, and requirements defined above.\nDo not deviate from the defined architecture, naming conventions, or code patterns.\nGenerate production-ready TypeScript code only.\nAsk no questions — implement based on the context provided.\n\n## Wave: ${wave}\nImplement the ${wave} layer of the project as defined by the artifacts above.\nFollow all contracts strictly. Apply all manifesto principles. Satisfy all requirements.\n`;
+    const prompt = `# r2pde-ai — Wave Prompt: ${wave}\nGenerated: ${now.toISOString()}\nScore: ${score.level === 'green' ? '🟢' : score.level === 'yellow' ? '🟡' : '🔴'} ${score.percentage}%\n\n---\n\n## Project Context\n${indexContent}\n\n---\n\n## manifests\n${manifestsContent}\n\n---\n\n## Contracts\n${contractsContent}\n\n---\n\n## Requirements\n${requirementsContent}\n\n---\n\n## Wave Objective\nYou are an AI coding assistant working on the ${wave} wave of this project.\nYour task is to implement everything required for this wave following ALL manifests, contracts, and requirements defined above.\nDo not deviate from the defined architecture, naming conventions, or code patterns.\nGenerate production-ready TypeScript code only.\nAsk no questions — implement based on the context provided.\n\n## Wave: ${wave}\nImplement the ${wave} layer of the project as defined by the artifacts above.\nFollow all contracts strictly. Apply all manifest principles. Satisfy all requirements.\n`;
 
     // Step 5.1 — AI Adapter
     const configPath = path.join(paths.root, 'pde.config.json');
@@ -92,7 +92,7 @@ export const wavePromptCommand = new Command('wave:prompt')
     let isApi = adapter.isReal();
     try {
       if (isApi) {
-        const metaInstruction = `You are an expert software architect and prompt engineer.\nYour task is to analyze the project context below and generate an optimized, precise prompt for GitHub Copilot.\nThe prompt you generate will be pasted directly into GitHub Copilot to implement the \"${wave}\" wave of this project.\nMake the prompt:\n- Specific and unambiguous\n- Aligned with the defined architecture, patterns, and conventions\n- Structured so Copilot understands exactly what to implement and how\n- Include all relevant constraints from manifestos and contracts\n- Reference acceptance criteria from requirements\nDo not generate code yourself. Generate only the optimized Copilot prompt.\n\n## Project Context\n${prompt}\n\nNow generate the optimized GitHub Copilot prompt for the \"${wave}\" wave:`;
+        const metaInstruction = `You are an expert software architect and prompt engineer.\nYour task is to analyze the project context below and generate an optimized, precise prompt for GitHub Copilot.\nThe prompt you generate will be pasted directly into GitHub Copilot to implement the \"${wave}\" wave of this project.\nMake the prompt:\n- Specific and unambiguous\n- Aligned with the defined architecture, patterns, and conventions\n- Structured so Copilot understands exactly what to implement and how\n- Include all relevant constraints from manifests and contracts\n- Reference acceptance criteria from requirements\nDo not generate code yourself. Generate only the optimized Copilot prompt.\n\n## Project Context\n${prompt}\n\nNow generate the optimized GitHub Copilot prompt for the \"${wave}\" wave:`;
         outputPrompt = await adapter.generate(metaInstruction);
       } else {
         outputPrompt = await adapter.generate(prompt);

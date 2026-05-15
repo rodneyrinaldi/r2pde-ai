@@ -13,7 +13,7 @@ This project adheres to [Semantic Versioning](https://semver.org).
 ### Added
 - `init` command — interactive project initialization with full .r2pde-ai structure
 - `doctor` command — environment health check
-- `manifesto:create` / `manifesto:delete` — manifesto artifact management
+- `manifest:create` / `manifest:delete` — manifest artifact management
 - `contract:create` / `contract:delete` — contract artifact management
 - `requirement:create` / `requirement:delete` — requirement artifact management
 - `score` / `score:config` — quality score engine with traffic light system

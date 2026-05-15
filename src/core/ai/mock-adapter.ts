@@ -19,7 +19,7 @@ export class MockAdapter implements IAiAdapter {
       '## Instructions for GitHub Copilot',
       '',
       'Read the full context below and implement the requested wave.',
-      'Follow all manifestos, contracts, and requirements strictly.',
+      'Follow all manifests, contracts, and requirements strictly.',
       'Generate production-ready TypeScript code only.',
       'Do not ask questions — implement based on the context provided.',
       '',

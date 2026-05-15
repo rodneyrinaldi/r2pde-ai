@@ -8,7 +8,7 @@ import path from 'path';
 
 export const scoreCommand = new Command('score')
   .description('Evaluate quality score from current or specified context')
-  .option('--from <folder>', 'Evaluate from this folder (manifestos | contracts | requirements)')
+  .option('--from <folder>', 'Evaluate from this folder (manifests | contracts | requirements)')
   .action(async (opts) => {
     const cwd = process.cwd();
     const paths = getPaths(cwd);

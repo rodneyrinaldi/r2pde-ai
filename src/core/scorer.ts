@@ -1,4 +1,4 @@
-﻿import fs from 'fs-extra';
+import fs from 'fs-extra';
 import path from 'path';
 import { loadConfig } from './config.js';
 import { getPaths } from './paths.js';
@@ -39,18 +39,18 @@ function parseMetadata(content: string): Record<string, string> | null {
 export function scoreProject(projectRoot: string, fromPath?: string): ScoreResult {
   const pdePaths = getPaths(projectRoot);
   const paths = {
-    manifestos: pdePaths.manifestos,
+    manifests: pdePaths.manifests,
     contracts: pdePaths.contracts,
     requirements: pdePaths.requirements,
   };
-  const folders = ['manifestos', 'contracts', 'requirements'];
+  const folders = ['manifests', 'contracts', 'requirements'];
   const foldersToProcess = fromPath && folders.includes(fromPath)
     ? [fromPath]
     : folders;
 
   let total = 0, passed = 0, failed = 0;
   const warnings: ScoreWarning[] = [];
-  const found: Record<string, boolean> = { manifestos: false, contracts: false, requirements: false };
+  const found: Record<string, boolean> = { manifests: false, contracts: false, requirements: false };
 
   for (const folder of folders) {
     const dir = paths[folder as keyof typeof paths];
@@ -117,11 +117,11 @@ export function scoreProject(projectRoot: string, fromPath?: string): ScoreResul
 
   if (!fromPath) {
     ++total;
-    if (found.manifestos) {
+    if (found.manifests) {
       ++passed;
     } else {
       ++failed;
-      warnings.push({ file: 'manifestos/', issue: 'No manifestos defined', severity: 'error' });
+      warnings.push({ file: 'manifests/', issue: 'No manifests defined', severity: 'error' });
     }
     ++total;
     if (found.contracts) {

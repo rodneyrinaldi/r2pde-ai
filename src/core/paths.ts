@@ -8,7 +8,7 @@ export function getPaths(projectRoot: string) {
     index: resolve('.r2pde-ai', 'pde.index.md'),
     guide: resolve('.r2pde-ai', 'GUIDE.md'),
     templates: resolve('.r2pde-ai', 'templates'),
-    manifestos: resolve('.r2pde-ai', 'manifestos'),
+    manifests: resolve('.r2pde-ai', 'manifests'),
     contracts: resolve('.r2pde-ai', 'contracts'),
     requirements: resolve('.r2pde-ai', 'requirements'),
     waves: resolve('.r2pde-ai', 'waves'),

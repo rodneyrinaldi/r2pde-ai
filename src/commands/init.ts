@@ -1,4 +1,4 @@
-﻿
+
 // Removed legacy inquirer import
 import { input, select, confirm } from '@inquirer/prompts';
 import fs from 'fs-extra';
@@ -17,7 +17,7 @@ export async function initCommand(): Promise<void> {
   const cwd = process.cwd();
   const paths = getPaths(cwd);
 
-  // Step 1 — Validate environment FIRST
+  // Step 1 � Validate environment FIRST
   const alreadyInitialized = fs.existsSync(paths.root);
   if (alreadyInitialized) {
     logWarn('r2pde-ai is already initialized in this project.');
@@ -36,17 +36,17 @@ export async function initCommand(): Promise<void> {
     logWarn('No git repository detected. It is strongly recommended to initialize git before proceeding.');
   }
 
-  // Step 2 — Create folders AFTER validation
+  // Step 2 � Create folders AFTER validation
   fs.ensureDirSync(paths.root);
   fs.ensureDirSync(paths.templates);
-  fs.ensureDirSync(paths.manifestos);
+  fs.ensureDirSync(paths.manifests);
   fs.ensureDirSync(paths.contracts);
   fs.ensureDirSync(paths.requirements);
   fs.ensureDirSync(paths.waves);
   fs.ensureDirSync(paths.prompts);
   fs.ensureDirSync(paths.logs);
 
-  // Step 3 — Interactive project setup
+  // Step 3 � Interactive project setup
   const folderName = path.basename(cwd);
   logInfo('The name of your project. Used in generated files and git commits.');
   const projectName = await input({ message: 'Project name:', default: folderName });
@@ -116,12 +116,12 @@ export async function initCommand(): Promise<void> {
   logInfo('The language used in CLI output messages.');
   const language = await select({ message: 'Language for messages:', choices: [
     { name: 'English', value: 'en' },
-    { name: 'Português', value: 'pt' }
+    { name: 'Portugu�s', value: 'pt' }
   ] });
   logInfo('The language used in generated markdown artifact files.');
   const artifactsLanguage = await select({ message: 'Language for artifacts:', choices: [
     { name: 'English', value: 'en' },
-    { name: 'Português', value: 'pt' }
+    { name: 'Portugu�s', value: 'pt' }
   ] });
 
   // Compose config object from prompt results
@@ -145,11 +145,11 @@ export async function initCommand(): Promise<void> {
     },
   };
 
-  // Step 4 — Save config file
+  // Step 4 � Save config file
   saveConfig(cwd, config);
 
-  // Step 5 — Generate pde.index.md
-  const indexContent = `# PDE Index — ${projectName}
+  // Step 5 � Generate pde.index.md
+  const indexContent = `# PDE Index � ${projectName}
 
 > Always paste this file into your AI copilot before any prompt.
 
@@ -167,7 +167,7 @@ export async function initCommand(): Promise<void> {
 - **Stack**: ${stack}
 
 ## Artifact Map
-- Manifestos: .r2pde-ai/manifestos/
+- manifests: .r2pde-ai/manifests/
 - Contracts: .r2pde-ai/contracts/
 - Requirements: .r2pde-ai/requirements/
 - Waves: .r2pde-ai/waves/
@@ -179,9 +179,9 @@ export async function initCommand(): Promise<void> {
 `;
   fs.writeFileSync(paths.index, indexContent, { encoding: 'utf8' });
 
-  // Step 6 — Copy templates
+  // Step 6 � Copy templates
   const templateFiles = [
-    { src: path.resolve(__dirname, '../templates/manifesto.template.md'), dest: path.resolve(paths.templates, 'manifesto.template.md') },
+    { src: path.resolve(__dirname, '../templates/manifest.template.md'), dest: path.resolve(paths.templates, 'manifest.template.md') },
     { src: path.resolve(__dirname, '../templates/contract.template.md'), dest: path.resolve(paths.templates, 'contract.template.md') },
     { src: path.resolve(__dirname, '../templates/requirement.template.md'), dest: path.resolve(paths.templates, 'requirement.template.md') },
   ];
@@ -191,15 +191,92 @@ export async function initCommand(): Promise<void> {
     fs.copyFileSync(src, dest);
   }
 
-  // Step 7 — Generate GUIDE.md
-  const guideContent = `# r2pde-ai GUIDE\n\n## What is a Manifesto?\nA Manifesto defines guiding principles for your project. Create one when you want to establish a core value or philosophy.\n\n**Structure:**\n- Purpose\n- Principles\n- Scope\n- Exceptions\n\n## What is a Contract?\nA Contract enforces rules or agreements in your project. Create one to formalize expectations.\n\n**Structure:**\n- Purpose\n- Rules\n- Violations\n- Exceptions\n\n## What is a Requirement?\nA Requirement describes a functional, non-functional, or business rule. Create one for every need or constraint.\n\n**Structure:**\n- Type\n- Description\n- Acceptance Criteria\n- Dependencies\n- Notes\n\n## What are Waves?\nWaves are iterative cycles of delivery. Each wave advances the project with new artifacts.\n\n**How to advance:**\n- Complete all requirements and contracts for the current wave.\n- Review quality score.\n- Start the next wave.\n\n## What is the Quality Score?\nThe Quality Score measures project health:\n- 🟢 Green: 0-30\n- 🟡 Yellow: 31-70\n- 🔴 Red: 71-100\n\n## How to use pde.index.md\nPaste .r2pde-ai/pde.index.md into your AI copilot before any prompt to provide full project context.\n\n## Prompt Generation (wave:prompt)\n\n- **Offline mode:** Generates a structured prompt for copy/paste into GitHub Copilot.\n- **API mode:** Generates an AI-optimized prompt for copy/paste into GitHub Copilot.\n- **Copilot always generates the code** — the AI API only improves the prompt quality.\n\n## CLI Commands Reference\n- init: Initialize r2pde-ai in the current project\n- doctor: Diagnose project health\n`;
-  fs.writeFileSync(paths.guide, guideContent, { encoding: 'utf8' });
 
-  // Step 8 — Git commit if enabled
+    const guideContent = [
+      '# r2pde-ai GUIDE',
+      '',
+      '## What is a manifest?',
+      'A manifest defines guiding principles for your project. Create one when you want to establish a core value or philosophy.',
+      '',
+      '**Structure:**',
+      '- Purpose',
+      '- Principles',
+      '- Scope',
+      '- Exceptions',
+      '- changeType (feat, fix, improve)',
+      '',
+      '## What is a Contract?',
+      'A Contract enforces rules or agreements in your project. Create one to formalize expectations.',
+      '',
+      '**Structure:**',
+      '- Purpose',
+      '- Rules',
+      '- Violations',
+      '- Exceptions',
+      '- changeType (feat, fix, improve)',
+      '',
+      '## What is a Requirement?',
+      'A Requirement describes a functional, non-functional, or business rule. Create one for every need or constraint.',
+      '',
+      '**Structure:**',
+      '- Type',
+      '- Description',
+      '- Acceptance Criteria',
+      '- Dependencies',
+      '- Notes',
+      '- changeType (feat, fix, improve)',
+      '',
+      '## About changeType',
+      'Every artifact now includes a changeType field in its frontmatter.',
+      '- feat: New feature, principle, rule, or requirement.',
+      '- fix: Correction of an error, bug, or adjustment.',
+      '- improve: Enhancement or refinement of an existing artifact.',
+      '',
+      '**Example frontmatter:**',
+      '---',
+      'name: User Authentication',
+      'scope: security',
+      'description: Enforces secure authentication for all users',
+      'changeType: feat',
+      'createdAt: 2026-05-15T12:00:00.000Z',
+      '---',
+      '',
+      '## What are Waves?',
+      'Waves are iterative cycles of delivery. Each wave advances the project with new artifacts.',
+      '',
+      '**How to advance:**',
+      '- Complete all requirements and contracts for the current wave.',
+      '- Review quality score.',
+      '- Start the next wave.',
+      '',
+      '## What is the Quality Score?',
+      'The Quality Score measures project health:',
+      '- 🟢 Green: 0-30',
+      '- 🟡 Yellow: 31-70',
+      '- 🔴 Red: 71-100',
+      '',
+      '## How to use pde.index.md',
+      'Paste .r2pde-ai/pde.index.md into your AI copilot before any prompt to provide full project context.',
+      '',
+      '## Prompt Generation (wave:prompt)',
+      '',
+      '- **Offline mode:** Generates a structured prompt for copy/paste into GitHub Copilot.',
+      '- **API mode:** Generates an AI-optimized prompt for copy/paste into GitHub Copilot.',
+      '- **Copilot always generates the code** — the AI API only improves the prompt quality.',
+      '',
+      '## CLI Commands Reference',
+      '- init: Initialize r2pde-ai in the current project',
+      '- doctor: Diagnose project health',
+    ].join('\n');
+    fs.writeFileSync(paths.guide, guideContent, { encoding: "utf8" });
+
+  // Step 8 � Git commit if enabled
   gitAddAndCommit(cwd, 'init: project initialized', config);
 
-  // Step 9 — Final output
+  // Step 9 � Final output
   logSuccess('r2pde-ai initialized successfully.');
   logInfo('Start by reading .r2pde-ai/GUIDE.md');
   logInfo('Then paste .r2pde-ai/pde.index.md into your AI copilot before any prompt.');
 }
+
+

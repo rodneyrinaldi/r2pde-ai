@@ -1,0 +1,246 @@
+project:
+  name: Corporate Agenda
+  root: scaffold_done
+  description: >
+    Build a Professional Corporate Agenda App with User Management and Calendar Sync (Outlook & Google) using r2pde-ai.
+    This YAML simulates a real, detailed journey to create a robust corporate agenda application, with fully filled-out examples, best practices, and step-by-step CLI usage.
+
+  steps:
+    # 1. Project Initialization
+    - type: mkdir
+      path: .r2pde-ai
+      comment: Cria a pasta de configuração do projeto.
+
+    - type: git-init
+      comment: Inicializa o repositório git.
+
+    - type: cli
+      command: npx r2pde-ai init
+      answers:
+        - Corporate Agenda         # Project name
+        - Dashboard                # Project type
+        - Monolith                 # Architecture
+        - Clean Code               # Code pattern
+        - Production               # Maturity
+        - English                  # Language for artifacts
+      comment: Inicializa o r2pde-ai com as respostas recomendadas.
+
+    # 2. Environment Health Check
+    - type: cli
+      command: npx r2pde-ai doctor
+      comment: Verifica a saúde do ambiente.
+
+    # 3. Defining Manifests (Guiding Principles)
+    - type: cli
+      command: npx r2pde-ai manifest:create
+      answers:
+        - UI Principles
+        - UI
+        - All user interfaces must be intuitive, responsive, and accessible. Mobile-first design is mandatory. Consistent color palette and typography across all screens.
+        - feat
+      comment: Cria o manifesto de princípios de UI.
+
+    - type: cli
+      command: npx r2pde-ai manifest:create
+      answers:
+        - Security Philosophy
+        - Security
+        - User data privacy is a core value. All authentication and sensitive operations must use secure protocols. No passwords or tokens are ever logged.
+        - feat
+      comment: Cria o manifesto de segurança.
+
+    - type: cli
+      command: npx r2pde-ai manifest:create
+      answers:
+        - Integration Policy
+        - Integration
+        - All third-party calendar integrations must use OAuth2, respect user consent, and provide clear opt-in/out. No data is shared without explicit permission.
+        - feat
+      comment: Cria o manifesto de integração.
+
+    # 4. Defining Contracts (Non-negotiable Rules)
+    - type: cli
+      command: npx r2pde-ai contract:create
+      answers:
+        - API Security
+        - Security
+        - Mandatory
+        - All API endpoints require JWT authentication. Tokens must be validated on every request. No endpoint exposes sensitive data without proper authorization.
+        - feat
+      comment: Cria o contrato de segurança de API.
+
+    - type: cli
+      command: npx r2pde-ai contract:create
+      answers:
+        - Calendar Sync Consistency
+        - Integration
+        - Mandatory
+        - All events must be synced bidirectionally with Outlook and Google calendars. Conflicts are resolved using last-write-wins. Sync failures are logged and retried automatically.
+        - feat
+      comment: Cria o contrato de consistência de sincronização.
+
+    - type: cli
+      command: npx r2pde-ai contract:create
+      answers:
+        - User Data Protection
+        - Security
+        - Mandatory
+        - All user data is encrypted at rest and in transit. No sensitive data is stored in logs or analytics. Data retention policies comply with LGPD/GDPR.
+        - feat
+      comment: Cria o contrato de proteção de dados.
+
+    # 5. Defining Requirements (Functional, Non-functional, Business)
+    - type: cli
+      command: npx r2pde-ai requirement:create
+      answers:
+        - User Registration
+        - Functional
+        - High
+        - Allow new users to register with email, password, and full name. Email verification is required before first login.
+        - feat
+        - |
+          Registration form with email, password, full name
+          Email format and password strength validation
+          Verification email sent on registration
+          User cannot log in before verifying email
+      comment: Cria o requisito de cadastro de usuário.
+
+    - type: cli
+      command: npx r2pde-ai requirement:create
+      answers:
+        - User Login
+        - Functional
+        - High
+        - Registered users can log in using email and password. JWT is issued on successful login. Failed attempts are rate-limited.
+        - feat
+        - |
+          Login form with email and password
+          JWT issued on success
+          5 failed attempts lock account for 10 minutes
+      comment: Cria o requisito de login de usuário.
+
+    - type: cli
+      command: npx r2pde-ai requirement:create
+      answers:
+        - Calendar Event CRUD
+        - Functional
+        - High
+        - Users can create, read, update, and delete calendar events. Events have title, description, start/end time, location, and attendees.
+        - feat
+        - |
+          Event list and detail views
+          Create/edit/delete event forms
+          Validation for overlapping events
+      comment: Cria o requisito de CRUD de eventos.
+
+    - type: cli
+      command: npx r2pde-ai requirement:create
+      answers:
+        - Outlook Calendar Sync
+        - Integration
+        - High
+        - Users can connect their Outlook account. Events are synced both ways. OAuth2 is used for authentication.
+        - feat
+        - |
+          Connect Outlook button
+          OAuth2 consent flow
+          Events appear in both systems within 1 minute
+      comment: Cria o requisito de integração com Outlook.
+
+    - type: cli
+      command: npx r2pde-ai requirement:create
+      answers:
+        - Google Calendar Sync
+        - Integration
+        - High
+        - Users can connect their Google account. Events are synced both ways. OAuth2 is used for authentication.
+        - feat
+        - |
+          Connect Google button
+          OAuth2 consent flow
+          Events appear in both systems within 1 minute
+      comment: Cria o requisito de integração com Google Calendar.
+
+    - type: cli
+      command: npx r2pde-ai requirement:create
+      answers:
+        - Responsive UI
+        - Non-functional
+        - High
+        - The application must be fully usable on desktop, tablet, and mobile. All screens adapt to different resolutions.
+        - feat
+        - |
+          Layout adapts to screen size
+          Touch-friendly controls
+          No horizontal scroll on mobile
+      comment: Cria o requisito de responsividade.
+
+    - type: cli
+      command: npx r2pde-ai requirement:create
+      answers:
+        - Data Encryption at Rest
+        - Non-functional
+        - High
+        - All user and event data is encrypted in the database. Encryption keys are rotated every 90 days.
+        - feat
+        - |
+          All sensitive fields encrypted
+          Key rotation policy documented
+      comment: Cria o requisito de criptografia.
+
+    # 6. Review and Adjust Artifacts
+    - type: comment
+      text: |
+        Revise os arquivos em .r2pde-ai/manifests, .r2pde-ai/contracts e .r2pde-ai/requirements para garantir clareza, completude e conformidade.
+        Use changeType: fix para correções e improve para melhorias.
+
+    # 7. Generating Project Context and Prompt
+    - type: cli
+      command: npx r2pde-ai wave:prompt
+      comment: Gera o prompt de contexto do projeto para uso com IA.
+
+    # 8. Implementation and Iteration
+    - type: comment
+      text: |
+        Use o código gerado como ponto de partida.
+        Repita as etapas para adicionar/refinar artefatos e use r2pde-ai score para checar a saúde do projeto.
+
+    # 9. Best Practices
+    - type: comment
+      text: |
+        - Mantenha artefatos versionados no git.
+        - Use changeType para indicar intenção.
+        - Prefira ondas pequenas e incrementais.
+        - Revise o audit log regularmente.
+        - Envolva stakeholders na revisão dos artefatos.
+
+    # Gera o README.md com instruções e contexto
+    - type: file
+      path: README.md
+      content: |
+        # Corporate Agenda
+
+        Aplicação de agenda corporativa com gestão de usuários e integração com Outlook/Google Calendar.
+
+        - Projeto gerado via onboarding automatizado.
+        - Estrutura de artefatos em `.r2pde-ai/`
+        - Para mais detalhes, consulte o guia YAML.
+
+  files:
+    - .r2pde-ai/manifests/ui-principles.md
+    - .r2pde-ai/manifests/security-philosophy.md
+    - .r2pde-ai/manifests/integration-policy.md
+    - .r2pde-ai/contracts/api-security.md
+    - .r2pde-ai/contracts/calendar-sync-consistency.md
+    - .r2pde-ai/contracts/user-data-protection.md
+    - .r2pde-ai/requirements/user-registration.md
+    - .r2pde-ai/requirements/user-login.md
+    - .r2pde-ai/requirements/calendar-event-crud.md
+    - .r2pde-ai/requirements/outlook-calendar-sync.md
+    - .r2pde-ai/requirements/google-calendar-sync.md
+    - .r2pde-ai/requirements/responsive-ui.md
+    - .r2pde-ai/requirements/data-encryption-at-rest.md
+    - README.md
+
+
+    
