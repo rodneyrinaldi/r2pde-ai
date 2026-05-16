@@ -8,55 +8,7 @@ project:
       command: npm init -y
       comment: Inicializa o npm (cria package.json).
     - type: git-init
-    - type: cli
-      command: node ../dist/cli.js init
-      answers:
-        - Corporate Agenda
-        - Dashboard
-        - Monolith
-        - Clean Code
-        - Production
-        - English
-    - type: cli
-      command: node ../dist/cli.js doctor
 
-    # Manifests
-    - type: cli
-      command: node ../dist/cli.js manifest:create --name "UI Principles" --scope ui --description "All user interfaces must be intuitive, responsive, and accessible. Mobile-first design is mandatory. Consistent color palette and typography across all screens." --type feat --force
-    - type: cli
-      command: node ../dist/cli.js manifest:create --name "Security Philosophy" --scope security --description "User data privacy is a core value. All authentication and sensitive operations must use secure protocols. No passwords or tokens are ever logged." --type feat --force
-    - type: cli
-      command: node ../dist/cli.js manifest:create --name "Integration Policy" --scope integration --description "All third-party calendar integrations must use OAuth2, respect user consent, and provide clear opt-in/out. No data is shared without explicit permission." --type feat --force
-
-    # Contracts
-    - type: cli
-      command: node ../dist/cli.js contract:create --name "API Security" --type security --enforcement mandatory --description "All API endpoints require JWT authentication. Tokens must be validated on every request. No endpoint exposes sensitive data without proper authorization." --changeType feat --force
-    - type: cli
-      command: node ../dist/cli.js contract:create --name "Calendar Sync Consistency" --type integration --enforcement mandatory --description "All events must be synced bidirectionally with Outlook and Google calendars. Conflicts are resolved using last-write-wins. Sync failures are logged and retried automatically." --changeType feat --force
-    - type: cli
-      command: node ../dist/cli.js contract:create --name "User Data Protection" --type security --enforcement mandatory --description "All user data is encrypted at rest and in transit. No sensitive data is stored in logs or analytics. Data retention policies comply with LGPD/GDPR." --changeType feat --force
-
-    # Requirements
-    - type: cli
-      command: node ../dist/cli.js requirement:create --name "User Registration" --type functional --priority high --description "Allow new users to register with email, password, and full name. Email verification is required before first login." --changeType feat --acceptance "Registration form with email, password, full name; Email format and password strength validation; Verification email sent on registration; User cannot log in before verifying email" --force
-    - type: cli
-      command: node ../dist/cli.js requirement:create --name "User Login" --type functional --priority high --description "Registered users can log in using email and password. JWT is issued on successful login. Failed attempts are rate-limited." --changeType feat --acceptance "Login form with email and password; JWT issued on success; 5 failed attempts lock account for 10 minutes" --force
-    - type: cli
-      command: node ../dist/cli.js requirement:create --name "Calendar Event CRUD" --type functional --priority high --description "Users can create, read, update, and delete calendar events. Events have title, description, start/end time, location, and attendees." --changeType feat --acceptance "Event list and detail views; Create/edit/delete event forms; Validation for overlapping events" --force
-    - type: cli
-      command: node ../dist/cli.js requirement:create --name "Outlook Calendar Sync" --type integration --priority high --description "Users can connect their Outlook account. Events are synced both ways. OAuth2 is used for authentication." --changeType feat --acceptance "Connect Outlook button; OAuth2 consent flow; Events appear in both systems within 1 minute" --force
-    - type: cli
-      command: node ../dist/cli.js requirement:create --name "Google Calendar Sync" --type integration --priority high --description "Users can connect their Google account. Events are synced both ways. OAuth2 is used for authentication." --changeType feat --acceptance "Connect Google button; OAuth2 consent flow; Events appear in both systems within 1 minute" --force
-    - type: cli
-      command: node ../dist/cli.js requirement:create --name "Responsive UI" --type non-functional --priority high --description "The application must be fully usable on desktop, tablet, and mobile. All screens adapt to different resolutions." --changeType feat --acceptance "Layout adapts to screen size; Touch-friendly controls; No horizontal scroll on mobile" --force
-    - type: cli
-      command: node ../dist/cli.js requirement:create --name "Data Encryption at Rest" --type non-functional --priority high --description "All user and event data is encrypted in the database. Encryption keys are rotated every 90 days." --changeType feat --acceptance "All sensitive fields encrypted; Key rotation policy documented" --force
-
-    # Artifacts review and prompt
-    - type: cli
-      command: node ../dist/cli.js wave:prompt
-    - type: cli
-      command: node ../dist/cli.js score
 
     # Essenciais
     - type: file
