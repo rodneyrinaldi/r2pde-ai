@@ -6,12 +6,20 @@ This guide simulates a real, detailed journey to create a robust corporate agend
 
 ---
 
+
 ## 1. Project Initialization
 
 ```bash
 mkdir corporate-agenda
 cd corporate-agenda
+
+# Initialize npm (creates package.json)
+npm init -y
+
+# Initialize git
 git init
+
+# Initialize r2pde-ai
 r2pde-ai init
 ```
 

@@ -1,4 +1,4 @@
-// ...existing code...
+#!/usr/bin/env node// ...existing code...
 // ...existing code...
 import { scaffoldCreateCommand } from './commands/scaffold-create.js';
 
@@ -135,4 +135,14 @@ program
     void doctorCommand();
   });
 
+if (process.argv.length <= 2) {
+  // Sem argumentos: exibe versão e autoria
+  // Versão e autoria vindos do package.json
+  // (hardcoded para evitar import dinâmico em CLI)
+  console.log('r2pde-ai v0.1.0');
+  console.log('Autor: r2 rodneyrinaldi');
+  process.exit(0);
+}
+
 program.parse();
+

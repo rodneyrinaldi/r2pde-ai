@@ -10,7 +10,9 @@
     "type": "module",
     "scripts": {
         "lint": "echo \"Linting not configured\"",
-        "build": "rimraf dist && tsc && npm run copy-templates",
+        "build": "rimraf dist && tsc && npm run copy-templates && npm run copy-guide && npm run postbuild:cli",
+        "copy-guide": "node -e \"require('fs').copyFileSync('scaffold-guide.yaml','dist/scaffold-guide.yaml')\"",
+        "postbuild:cli": "node scripts/postbuild-cli.cjs",
         "copy-templates": "node -e \"const fs=require('fs');const path=require('path');const src=path.join('src','templates');const dest=path.join('dist','templates');fs.mkdirSync(dest,{recursive:true});fs.readdirSync(src).forEach(f=>fs.copyFileSync(path.join(src,f),path.join(dest,f)));\"",
         "dev": "ts-node src/cli.ts",
         "start": "node dist/cli.js",
@@ -45,7 +47,8 @@
         "README.md",
         "LICENSE",
         "CHANGELOG.md",
-        "ONBOARDING-QUICKSTART.md"
+        "ONBOARDING-QUICKSTART.md",
+        "scaffold-guide.yaml"
     ],
     "engines": {
         "node": ">=20.0.0"

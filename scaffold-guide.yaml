@@ -4,6 +4,9 @@ project:
   steps:
     - type: mkdir
       path: .r2pde-ai
+    - type: cli
+      command: npm init -y
+      comment: Inicializa o npm (cria package.json).
     - type: git-init
     - type: cli
       command: node ../dist/cli.js init

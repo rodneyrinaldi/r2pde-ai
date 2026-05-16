@@ -11,6 +11,10 @@ project:
       path: .r2pde-ai
       comment: Cria a pasta de configuração do projeto.
 
+    - type: cli
+      command: npm init -y
+      comment: Inicializa o npm (cria package.json).
+
     - type: git-init
       comment: Inicializa o repositório git.
 

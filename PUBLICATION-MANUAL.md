@@ -364,9 +364,17 @@ npm install -g r2pde-ai
 
 ### Como usar após instalação
 
+
 ```bash
 mkdir meu-projeto && cd meu-projeto
+
+# Inicialize o npm (cria package.json)
+npm init -y
+
+# Inicialize o git
 git init
+
+# Inicialize o r2pde-ai
 r2pde-ai init
 r2pde-ai doctor
 ```

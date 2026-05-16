@@ -1,3 +1,4 @@
+!scaffold-guide.yaml
 src/
 test*/
 *.test.ts

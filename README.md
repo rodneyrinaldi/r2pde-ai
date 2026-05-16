@@ -49,6 +49,9 @@ npm install -g r2pde-ai
 # Create and navigate to your project folder
 mkdir my-project && cd my-project
 
+# Initialize npm (creates package.json)
+npm init -y
+
 # Initialize git
 git init
 
@@ -408,3 +411,4 @@ r2pde-ai scaffold-from-guide --guide ./meu-guia.md --dest ./meu-projeto-exemplo
 ```
 
 Isso executa todos os comandos do guia, preenchendo automaticamente os prompts, e gera uma estrutura pronta para testes, onboarding ou demonstração.
+

@@ -180,14 +180,13 @@ export async function initCommand(): Promise<void> {
   fs.writeFileSync(paths.index, indexContent, { encoding: 'utf8' });
 
   // Step 6 � Copy templates
+  // Corrigir caminho dos templates para dist/templates
   const templateFiles = [
-    { src: path.resolve(__dirname, '../templates/manifest.template.md'), dest: path.resolve(paths.templates, 'manifest.template.md') },
-    { src: path.resolve(__dirname, '../templates/contract.template.md'), dest: path.resolve(paths.templates, 'contract.template.md') },
-    { src: path.resolve(__dirname, '../templates/requirement.template.md'), dest: path.resolve(paths.templates, 'requirement.template.md') },
+    { src: path.resolve(__dirname, '../../templates/manifest.template.md'), dest: path.resolve(paths.templates, 'manifest.template.md') },
+    { src: path.resolve(__dirname, '../../templates/contract.template.md'), dest: path.resolve(paths.templates, 'contract.template.md') },
+    { src: path.resolve(__dirname, '../../templates/requirement.template.md'), dest: path.resolve(paths.templates, 'requirement.template.md') },
   ];
-  const runtimeTemplateDir = path.resolve(__dirname, '../templates');
-  for (const { dest } of templateFiles) {
-    const src = path.resolve(runtimeTemplateDir, path.basename(dest));
+  for (const { src, dest } of templateFiles) {
     fs.copyFileSync(src, dest);
   }
 
