@@ -99,10 +99,43 @@ async function scaffoldCreateHandler(opts: { guide: string }) {
       }
     }
   }
+  // Copiar a pasta dist do projeto original para o scaffold gerado
+  try {
+    const sourceDist = path.resolve(__dirname, '../../dist');
+    const targetDist = path.join(cwd, 'dist');
+    if (fs.existsSync(sourceDist)) {
+      copyFolderRecursiveSync(sourceDist, targetDist);
+      logSuccess('Pasta dist copiada para o scaffold gerado.');
+    } else {
+      logWarn('Pasta dist não encontrada para copiar.');
+    }
+  } catch (err) {
+    logError('Erro ao copiar pasta dist: ' + err);
+  }
+
   if (!hasCriticalError) {
     logSuccess('Scaffold concluído com sucesso!');
   } else {
     logError('Scaffold finalizado com erros críticos. Revise as mensagens acima.');
+  }
+}
+
+// Função utilitária para cópia recursiva de pastas
+function copyFolderRecursiveSync(source: string, target: string) {
+  if (!fs.existsSync(target)) {
+    fs.mkdirSync(target, { recursive: true });
+  }
+  if (fs.lstatSync(source).isDirectory()) {
+    const files = fs.readdirSync(source);
+    for (const file of files) {
+      const curSource = path.join(source, file);
+      const curTarget = path.join(target, file);
+      if (fs.lstatSync(curSource).isDirectory()) {
+        copyFolderRecursiveSync(curSource, curTarget);
+      } else {
+        fs.copyFileSync(curSource, curTarget);
+      }
+    }
   }
 }
 
