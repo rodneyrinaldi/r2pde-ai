@@ -1,0 +1,15 @@
+Arquivos identificados como desnecessários para testes manuais de scaffold:
+- SCAFFOLD-MANUAL-TEST.md
+- scaffold-guide.yaml
+- scaffold.yaml
+- Pasta scaffold_done/
+- Pasta scaffold_test/
+
+Os testes automatizados principais estão em:
+- src/core/scorer.test.ts
+- src/core/paths.test.ts
+- src/core/config.test.ts
+- src/core/ai/adapter-factory.test.ts
+- src/commands/score-config.test.ts
+
+Se precisar restaurar algum arquivo, consulte o controle de versão.
