@@ -139,7 +139,7 @@ if (process.argv.length <= 2) {
   // Sem argumentos: exibe versão e autoria
   // Versão e autoria vindos do package.json
   // (hardcoded para evitar import dinâmico em CLI)
-  console.log('r2pde-ai v0.1.0');
+  console.log('r2pde-ai 2');
   console.log('Autor: r2 rodneyrinaldi');
   process.exit(0);
 }

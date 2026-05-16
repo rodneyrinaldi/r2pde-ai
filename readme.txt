@@ -22,6 +22,14 @@ iniciar um projeto
 
 
 
+atualizar git
+-------------
+git add . 
+git commit -m ""
+git push origin main
+
+
+
 atualizar npm
 -------------
 npm version patch (aumentar versão no package.json)
@@ -33,7 +41,7 @@ npm publish ou npm publish --tag beta
 
 testar
 ------
-ode dist/src/cli.js --help
+node dist/src/cli.js --help
 
 
 
