@@ -1,6 +1,6 @@
 {
     "name": "r2pde-ai",
-    "version": "0.1.3",
+    "version": "0.1.4",
     "description": "Pilot Driven Engineering â€” A CLI framework that bridges the gap between architectural intent and AI-generated code.",
     "license": "MIT",
     "main": "dist/index.js",
