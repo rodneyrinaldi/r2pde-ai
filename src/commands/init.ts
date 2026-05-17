@@ -180,7 +180,8 @@ export async function initCommand(): Promise<void> {
   fs.writeFileSync(paths.index, indexContent, { encoding: 'utf8' });
 
 
-  // Step 6 – Copy templates and scaffold.yaml to project root
+
+  // Step 6 – Copy templates to .r2pde-ai/templates
   const templateFiles = [
     { src: path.resolve(__dirname, '../../templates/manifest.template.md'), dest: path.resolve(paths.templates, 'manifest.template.md') },
     { src: path.resolve(__dirname, '../../templates/contract.template.md'), dest: path.resolve(paths.templates, 'contract.template.md') },
@@ -190,17 +191,19 @@ export async function initCommand(): Promise<void> {
     fs.copyFileSync(src, dest);
   }
 
-  // Copy scaffold.yaml from dist/templates (if built) or templates (dev) to project root
-  let scaffoldSrc = path.resolve(__dirname, '../../dist/templates/scaffold.yaml');
-  if (!fs.existsSync(scaffoldSrc)) {
-    scaffoldSrc = path.resolve(__dirname, '../../templates/scaffold.yaml');
+  // Step 7 – Copy README.md and scaffold-guide.yaml to project root, always overwrite
+  const readmeSrc = path.resolve(__dirname, '../../README.md');
+  const readmeDest = path.resolve(cwd, 'README.md');
+  if (fs.existsSync(readmeSrc)) {
+    fs.copyFileSync(readmeSrc, readmeDest);
+    logInfo('README.md criado/atualizado na raiz do projeto.');
   }
-  const scaffoldDest = path.resolve(cwd, 'scaffold.yaml');
-  if (!fs.existsSync(scaffoldDest)) {
-    fs.copyFileSync(scaffoldSrc, scaffoldDest);
-    logInfo('Arquivo scaffold.yaml copiado para a raiz do projeto. Edite conforme necessário para usar o scaffold-create.');
-  } else {
-    logWarn('Arquivo scaffold.yaml já existe na raiz do projeto. Não sobrescrito.');
+
+  const scaffoldGuideSrc = path.resolve(__dirname, '../../scaffold-guide.yaml');
+  const scaffoldGuideDest = path.resolve(cwd, 'scaffold-guide.yaml');
+  if (fs.existsSync(scaffoldGuideSrc)) {
+    fs.copyFileSync(scaffoldGuideSrc, scaffoldGuideDest);
+    logInfo('scaffold-guide.yaml criado/atualizado na raiz do projeto.');
   }
 
 

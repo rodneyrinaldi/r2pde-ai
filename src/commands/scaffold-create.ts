@@ -143,10 +143,22 @@ export const scaffoldCreateCommand = new Command('scaffold-create')
   .description('Gera um projeto de exemplo a partir de um arquivo de guia YAML. Se --guide não for informado, será usado ./scaffold.yaml da raiz do projeto.')
   .option('--guide <yaml>', 'Caminho para o arquivo de guia YAML (opcional, padrão: ./scaffold.yaml na raiz do projeto)')
   .action((opts) => {
-    let guidePath = opts.guide ? path.resolve(opts.guide) : path.resolve(process.cwd(), 'scaffold.yaml');
+    const cwd = process.cwd();
+    let guidePath = opts.guide ? path.resolve(opts.guide) : path.resolve(cwd, 'scaffold.yaml');
+    // Se não existir scaffold.yaml na raiz, copiar do template
     if (!fs.existsSync(guidePath)) {
-      console.error('Arquivo YAML não encontrado: ' + guidePath + '\nInforme --guide <yaml> ou rode o comando init para gerar um scaffold.yaml de exemplo.');
-      process.exit(1);
+      // Tenta copiar de dist/templates primeiro, depois de templates
+      let templatePath = path.resolve(__dirname, '../../dist/templates/scaffold.yaml');
+      if (!fs.existsSync(templatePath)) {
+        templatePath = path.resolve(__dirname, '../../templates/scaffold.yaml');
+      }
+      if (fs.existsSync(templatePath)) {
+        fs.copyFileSync(templatePath, guidePath);
+        logSuccess('Arquivo scaffold.yaml copiado para a raiz do projeto.');
+      } else {
+        console.error('Arquivo scaffold.yaml não encontrado nem na raiz nem nos templates do pacote.');
+        process.exit(1);
+      }
     }
     scaffoldCreateHandler({ guide: guidePath }).catch((err) => {
       console.error(err);
