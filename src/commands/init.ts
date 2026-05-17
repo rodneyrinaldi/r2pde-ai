@@ -179,8 +179,8 @@ export async function initCommand(): Promise<void> {
 `;
   fs.writeFileSync(paths.index, indexContent, { encoding: 'utf8' });
 
-  // Step 6 � Copy templates
-  // Corrigir caminho dos templates para dist/templates
+
+  // Step 6 – Copy templates and scaffold.yaml to project root
   const templateFiles = [
     { src: path.resolve(__dirname, '../../templates/manifest.template.md'), dest: path.resolve(paths.templates, 'manifest.template.md') },
     { src: path.resolve(__dirname, '../../templates/contract.template.md'), dest: path.resolve(paths.templates, 'contract.template.md') },
@@ -188,6 +188,19 @@ export async function initCommand(): Promise<void> {
   ];
   for (const { src, dest } of templateFiles) {
     fs.copyFileSync(src, dest);
+  }
+
+  // Copy scaffold.yaml from dist/templates (if built) or templates (dev) to project root
+  let scaffoldSrc = path.resolve(__dirname, '../../dist/templates/scaffold.yaml');
+  if (!fs.existsSync(scaffoldSrc)) {
+    scaffoldSrc = path.resolve(__dirname, '../../templates/scaffold.yaml');
+  }
+  const scaffoldDest = path.resolve(cwd, 'scaffold.yaml');
+  if (!fs.existsSync(scaffoldDest)) {
+    fs.copyFileSync(scaffoldSrc, scaffoldDest);
+    logInfo('Arquivo scaffold.yaml copiado para a raiz do projeto. Edite conforme necessário para usar o scaffold-create.');
+  } else {
+    logWarn('Arquivo scaffold.yaml já existe na raiz do projeto. Não sobrescrito.');
   }
 
 

@@ -140,32 +140,15 @@ function copyFolderRecursiveSync(source: string, target: string) {
 }
 
 export const scaffoldCreateCommand = new Command('scaffold-create')
-  .description('Gera um projeto de exemplo a partir de um arquivo de guia YAML')
-  .option('--guide <yaml>', 'Caminho para o arquivo de guia YAML (busca automática se não especificado)')
+  .description('Gera um projeto de exemplo a partir de um arquivo de guia YAML. Se --guide não for informado, será usado ./scaffold.yaml da raiz do projeto.')
+  .option('--guide <yaml>', 'Caminho para o arquivo de guia YAML (opcional, padrão: ./scaffold.yaml na raiz do projeto)')
   .action((opts) => {
-    const candidates: string[] = [];
-    if (opts.guide) {
-      candidates.push(path.resolve(opts.guide));
-    } else {
-      // Caminho relativo ao CLI instalado globalmente
-      let cliDir = path.dirname(new URL(import.meta.url).pathname);
-      if (process.platform === 'win32' && cliDir.startsWith('/')) {
-        cliDir = cliDir.slice(1);
-      }
-      candidates.push(
-        path.resolve(process.cwd(), 'scaffold-guide.yaml'),
-        path.resolve(cliDir, '../../scaffold-guide.yaml'),
-        path.resolve(cliDir, '../scaffold-guide.yaml')
-      );
-    }
-    const foundPath = candidates.find(f => f && fs.existsSync(f));
-    if (!foundPath) {
-      console.error('Arquivo scaffold-guide.yaml não encontrado em nenhum local padrão. Caminhos testados:');
-      candidates.forEach(f => console.error(' - ' + f));
+    let guidePath = opts.guide ? path.resolve(opts.guide) : path.resolve(process.cwd(), 'scaffold.yaml');
+    if (!fs.existsSync(guidePath)) {
+      console.error('Arquivo YAML não encontrado: ' + guidePath + '\nInforme --guide <yaml> ou rode o comando init para gerar um scaffold.yaml de exemplo.');
       process.exit(1);
     }
-    opts.guide = foundPath;
-    scaffoldCreateHandler(opts).catch((err) => {
+    scaffoldCreateHandler({ guide: guidePath }).catch((err) => {
       console.error(err);
       process.exit(1);
     });

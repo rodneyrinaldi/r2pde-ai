@@ -1,3 +1,12 @@
+# Scaffold
+
+O comando `scaffold-create` exige o parâmetro `--guide <yaml>`, que deve apontar para um arquivo YAML na raiz do projeto. O comando `init` copia automaticamente um `scaffold.yaml` de exemplo para a raiz do projeto.
+
+Exemplo:
+
+```sh
+r2pde-ai scaffold-create --guide ./scaffold.yaml
+```
 # Corporate Agenda Quickstart Guide
 
 > **Build a Professional Corporate Agenda App with User Management and Calendar Sync (Outlook & Google) using r2pde-ai**

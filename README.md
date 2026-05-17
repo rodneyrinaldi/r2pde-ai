@@ -401,13 +401,22 @@ See [LICENSE](./LICENSE) for full terms.
 Você pode gerar automaticamente um projeto de exemplo baseado no arquivo de guia (por padrão ONBOARDING-QUICKSTART.md) usando:
 
 ```bash
-r2pde-ai scaffold-from-guide
+r2pde-ai scaffold-create --guide ./scaffold.yaml
 ```
 
 Ou especificar um guia e pasta de destino personalizados:
 
 ```bash
-r2pde-ai scaffold-from-guide --guide ./meu-guia.md --dest ./meu-projeto-exemplo
+r2pde-ai scaffold-create --guide ./meu-guia.yaml
+## Scaffold
+
+O comando `scaffold-create` agora exige explicitamente o parâmetro `--guide <yaml>`, que deve apontar para um arquivo YAML na raiz do projeto. O comando `init` copia automaticamente um `scaffold.yaml` de exemplo para a raiz do projeto. Edite esse arquivo conforme necessário para gerar scaffolds customizados.
+
+Exemplo de uso:
+
+```sh
+r2pde-ai scaffold-create --guide ./scaffold.yaml
+```
 ```
 
 Isso executa todos os comandos do guia, preenchendo automaticamente os prompts, e gera uma estrutura pronta para testes, onboarding ou demonstração.

@@ -8,9 +8,10 @@ Este comando depende de CLIs externos (ex: r2pde-ai) e não é totalmente cobert
    
    npm run build
 
-2. Execute o comando scaffold-create apontando para o guia:
-   
-   node ./dist/src/cli.js scaffold-create --guide scaffold-guide.yaml
+
+2. Execute o comando scaffold-create apontando para o arquivo YAML na raiz do projeto (obrigatório):
+
+   node ./dist/src/cli.js scaffold-create --guide scaffold.yaml
 
 3. Verifique se a pasta `scaffold_done` foi criada e os arquivos esperados estão presentes.
 

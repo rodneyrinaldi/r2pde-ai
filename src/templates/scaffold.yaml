@@ -1,0 +1,26 @@
+project:
+  name: Example Project
+  root: scaffold_done
+  description: |
+    Example YAML for r2pde-ai scaffold. Replace with your project details.
+  steps:
+    - type: mkdir
+      path: .r2pde-ai
+      comment: Create config folder.
+    - type: cli
+      command: npm init -y
+      comment: Initialize npm.
+    - type: git-init
+      comment: Initialize git repo.
+    - type: cli
+      command: npx r2pde-ai init
+      answers:
+        - Example Project
+        - Micro SaaS
+        - Monolith
+        - Clean Code
+        - MVP
+        - English
+      comment: Run r2pde-ai init with defaults.
+  files:
+    - README.md
