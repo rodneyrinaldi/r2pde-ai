@@ -98,10 +98,13 @@ export async function manifestCreateCommand(): Promise<void> {
     return;
   }
   let template = fs.readFileSync(templatePath, 'utf8');
-  template = template.replace('[Name]', name);
-  const meta = `---\nname: ${name}\nscope: ${scope}\ndescription: ${description}\nchangeType: ${changeType}\ncreatedAt: ${new Date().toISOString()}\n---\n\n`;
-  const content = meta + template;
-  fs.writeFileSync(filePath, content, { encoding: 'utf8' });
+  // Substituir todos os placeholders do template
+  template = template.replace(/\{\{name\}\}/gi, name)
+                   .replace(/\{\{scope\}\}/gi, scope)
+                   .replace(/\{\{description\}\}/gi, description)
+                   .replace(/\{\{changeType\}\}/gi, changeType)
+                   .replace(/\{\{createdAt\}\}/gi, new Date().toISOString());
+  fs.writeFileSync(filePath, template, { encoding: 'utf8' });
 
   // Step 5 — Update pde.index.md
   if (fs.existsSync(paths.index)) {

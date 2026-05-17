@@ -104,12 +104,15 @@ export async function requirementCreateCommand(): Promise<void> {
     return;
   }
   let template = fs.readFileSync(templatePath, { encoding: 'utf8' });
-  template = template.replace('[Name]', name);
-  const meta = `---\nname: ${name}\ntype: ${type}\npriority: ${priority}\ndescription: ${description}\nchangeType: ${changeType}\ncreatedAt: ${new Date().toISOString()}\n---\n\n`;
-  const criteriaLines = criteria.split(',').map((c: string) => `- ${c.trim()}`).join('\n');
-  const criteriaSection = `## Acceptance Criteria\n${criteriaLines}\n\n`;
-  const content = meta + criteriaSection + template;
-  fs.writeFileSync(filePath, content, { encoding: 'utf8' });
+  // Substituir todos os placeholders do template
+  template = template.replace(/\{\{name\}\}/gi, name)
+                   .replace(/\{\{type\}\}/gi, type)
+                   .replace(/\{\{priority\}\}/gi, priority)
+                   .replace(/\{\{description\}\}/gi, description)
+                   .replace(/\{\{changeType\}\}/gi, changeType)
+                   .replace(/\{\{criteria\}\}/gi, criteria)
+                   .replace(/\{\{createdAt\}\}/gi, new Date().toISOString());
+  fs.writeFileSync(filePath, template, { encoding: 'utf8' });
 
   // Step 5 — Update pde.index.md
   if (fs.existsSync(paths.index)) {

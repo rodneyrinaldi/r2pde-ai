@@ -11,37 +11,3 @@ project:
 
 
     # Essenciais
-    - type: file
-      path: README.md
-      content: |
-        # Corporate Agenda
-        Aplicação de agenda corporativa com gestão de usuários e integração com Outlook/Google Calendar.
-        Gerada via onboarding automatizado r2pde-ai.
-    - type: file
-      path: .r2pde-ai/pde.index.md
-      content: |
-        # PDE Index
-        - manifests: .r2pde-ai/manifests/
-        - contracts: .r2pde-ai/contracts/
-        - requirements: .r2pde-ai/requirements/
-    - type: file
-      path: .r2pde-ai/pde.config.json
-      content: |
-        {
-          "version": "0.1.0",
-          "language": "en",
-          "artifactsLanguage": "en",
-          "git": { "autoCommit": false, "commitMessagePrefix": "pde:" },
-          "score": { "green": { "max": 30 }, "yellow": { "max": 70 }, "red": { "max": 100 } },
-          "ai": { "apiUrl": "", "apiKey": "", "model": "" },
-          "project": {
-            "type": "dashboard",
-            "architecture": "monolith",
-            "maturity": "production",
-            "hasAuth": true,
-            "hasPayment": false,
-            "hasIntegrations": true,
-            "audience": "b2b",
-            "stack": "Node.js / TypeScript"
-          }
-        }

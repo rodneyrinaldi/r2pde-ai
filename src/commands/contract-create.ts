@@ -104,10 +104,14 @@ export async function contractCreateCommand(): Promise<void> {
     return;
   }
   let template = fs.readFileSync(templatePath, { encoding: 'utf8' });
-  template = template.replace('[Name]', name);
-  const meta = `---\nname: ${name}\ntype: ${type}\nenforcement: ${enforcement}\ndescription: ${description}\nchangeType: ${changeType}\ncreatedAt: ${new Date().toISOString()}\n---\n\n`;
-  const content = meta + template;
-  fs.writeFileSync(filePath, content, { encoding: 'utf8' });
+  // Substituir todos os placeholders do template
+  template = template.replace(/\{\{name\}\}/gi, name)
+                   .replace(/\{\{type\}\}/gi, type)
+                   .replace(/\{\{enforcement\}\}/gi, enforcement)
+                   .replace(/\{\{description\}\}/gi, description)
+                   .replace(/\{\{changeType\}\}/gi, changeType)
+                   .replace(/\{\{createdAt\}\}/gi, new Date().toISOString());
+  fs.writeFileSync(filePath, template, { encoding: 'utf8' });
 
   // Step 5 — Update pde.index.md
   if (fs.existsSync(paths.index)) {
